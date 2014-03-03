@@ -1,0 +1,97 @@
+import pymongo
+import datetime
+
+#Use http://docs.python.org/2/library/shelve.html
+class InvoicePersistant(object):
+    pass
+
+
+class Day(object):
+    """
+    Keeps track of
+    - The day
+    - The tasks completed that day
+    - Hours worked that day
+    """
+
+    def __init__(self, *args, **kwargs):
+        self.timestamp = None
+        self.tasks = []
+        self.hours = None
+
+class Week(object):
+    """
+    Collection of Days
+    - Might want to use abc or just inherit from list
+    """
+
+    def __init__(self, *args, **kwargs):
+        self.days = []
+
+    def hours_total(self):
+        return sum([d.hours for d in self.days])
+
+class InvoiceApp(object):
+
+    def __init__(self, *args, **kwargs):
+        self.rate = None
+        self.weeks = []
+
+    def get_hours(self):
+        return sum([w.hours_total for w in self.weeks])
+
+    def get_weekly_totals(self):
+        return map(lambda x: x*self.rate, self.get_hours())
+
+def main():
+
+    client = pymongo.MongoClient()
+    db = client.invoice_database
+    collection = db.invoice_database
+
+    #Insert Day
+    day = {
+        "timestamp": datetime.datetime.utcnow(),
+        "tasks": ['writing this app', 'doing some other things'],
+        "hours": 11.5
+    }
+    posts = db.days
+    post_id = posts.insert(day)
+    db.collection_names()
+    posts.find_one()
+
+    #http://api.mongodb.org/python/current/tutorial.html
+
+    #Idea for data structure
+    month = {
+        'username': "John Doe",
+        'month': {
+            'year': "2010",
+            'rate': 14.00,
+            'week': {
+                'days': {
+                    'timestamp': "21890",
+                    'tasks': [],
+                    'hours': 4.5
+                }
+            }
+        }
+    }
+
+    months = db.months
+    month_id = months.insert(month)
+    db.collection_names()
+    months.find_one()
+    
+
+    if not (s['name'] or s['rate']):
+        #Prompt for name
+        #Prompt for rate
+        #Initialize DBM
+    app = InvoiceApp()
+
+if __name__ == '__main__':
+    main()
+
+
+
