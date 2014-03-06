@@ -1,0 +1,18 @@
+
+<a href="{{ task.get_absolute_url }}">{{ task.name }}</a>
+
+<p>
+    {{ task.description }}
+</p>
+<p>
+    {{ task.notes }}
+</p>
+<p>
+    <ol>
+    {% for hour in hours %}
+        <li>{{ hour }}</li>
+    {% endfor %}
+    </ol>
+</p>
+
+        

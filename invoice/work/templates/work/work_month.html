@@ -1,0 +1,12 @@
+{% extends 'base.tmpl' %}
+{% block title %}Work Overview{% endblock %}
+{% block body_main %}
+    <h1>Work Overview</h1>
+    <p>
+        {% for workday in workmonth %}
+            {{ workday }}
+        {% endfor %}
+    </p>
+{% endblock %}
+{% block body_end_js %}
+{% endblock %}

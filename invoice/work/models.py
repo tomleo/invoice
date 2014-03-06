@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.urlresolvers import reverse
 
 class Span(models.Model):
     start_time = models.DateTimeField()
@@ -10,6 +11,7 @@ class Span(models.Model):
 
 class Task(models.Model):
     name = models.CharField(max_length=255)
+    slug = models.SlugField()
     description = models.TextField()
     notes = models.TextField()
     hours = models.ManyToManyField('Span')
@@ -17,6 +19,9 @@ class Task(models.Model):
     def get_hours(self):
         """Return aggregate hours"""
         pass
+
+    def get_absolute_url(self):
+        return reverse('task-detail', kwargs={'pk':self.id, 'slug': self.slug})
 
 class Contact(models.Model):
     name = models.CharField(max_length=255)
@@ -28,16 +33,16 @@ class Contact(models.Model):
 class Company(models.Model):
     name = models.CharField(max_length=255)
     slug = models.SlugField(max_length=125)
-    contacts = models.ManyToManyField('Contact')
+    contacts = models.ManyToManyField(Contact, related_name='c+')
 
-class WorkDay(models.Model):
-    company = models.ForeignKey('Company')
+class Day(models.Model):
+    company = models.ForeignKey(Company)
     hourly_rate = models.DecimalField(max_digits=10, decimal_places=2)
     tasks = models.ManyToManyField('Task')
     date = models.DateField()
     notes = models.TextField()
 
-class WorkMonth(models.Model):
+class Month(models.Model):
     month = models.CharField(max_length=255)
-    work_days = models.ManyToManyField('WorkDay')
+    work_days = models.ManyToManyField(Day)
 
