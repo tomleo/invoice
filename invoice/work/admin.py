@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Span, Task, Contact, Company, WorkDay, WorkMonth
+from .models import Span, Task, Contact, Company, Day, Month
 
 admin.site.register(Span)
 
@@ -18,8 +18,8 @@ admin.site.register(Company, CompanyAdmin)
 
 class WorkDayAdmin(admin.ModelAdmin):
     pass
-admin.site.register(WorkDay, WorkDayAdmin)
+admin.site.register(Day, WorkDayAdmin)
 
 class WorkMonthAdmin(admin.ModelAdmin):
     pass
-admin.site.register(WorkMonth, WorkMonthAdmin)
+admin.site.register(Month, WorkMonthAdmin)
