@@ -19,7 +19,8 @@ Make use of flexbox
 Webcomponents
 -------------
 
-- Use Polymer instead of using django templates
+x Use Polymer instead of using django templates
+- Use React.js for view
 - Use ajax or backbone.js for communication with REST side
 
 More Things Will Go Here
@@ -27,3 +28,4 @@ More Things Will Go Here
 
 The idea behind this app is to create a ReSTfull API built using Django/Python3/PostgreSQL and
 provisioned using Salt
+

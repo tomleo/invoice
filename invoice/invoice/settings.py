@@ -39,8 +39,7 @@ INSTALLED_APPS = (
 )
 # 3rd Party Apps
 INSTALLED_APPS += (
-    'gunicorn',
-    'south'
+    'south',
 )
 # Local Apps
 INSTALLED_APPS += (
@@ -66,6 +65,10 @@ WSGI_APPLICATION = 'invoice.wsgi.application'
 import psycopg2.extensions
 DATABASES = {
     'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    },
+    'production': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'djinvoice',
         'USER': 'djinvoice',
@@ -92,5 +95,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = '/home/tom/hacking/invoice-program/staticfiles'
+#STATIC_ROOT = '/home/tom/hacking/invoice-program/staticfiles'
+STATIC_ROOT = '/data/invoice/static'
 
