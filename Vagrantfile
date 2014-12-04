@@ -1,40 +1,22 @@
 # -*- mode: ruby; -*-
-require 'etc'
+# vi: set ft=ruby :
 
-Vagrant.configure("2") do |config|
-  config.vm.define :web do |web|
-    # Ubuntu 12.04
-    web.vm.box = "precise64"
-    web.vm.box_url = "http://files.vagrantup.com/precise64.box"
+VAGRANTFILE_API_VERSION = "2"
 
-    # Network
-    web.vm.hostname = "vagrant.invoice-backend"
-    web.vm.network :forwarded_port, guest: 80, host: 8080, auto_correct: true
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
-    # Share for masterless server
-    web.vm.synced_folder "salt/roots/", "/srv/"
+  config.vm.box = "ubuntu/trusty64"
+  config.vm.box_check_update = false
+  config.vm.network "forwarded_port", guest: 8001, host: 8001
+  config.ssh.forward_agent = true
 
-    #web.vm.provision :salt do |salt|
-    #  # Configure the minion
-    #  salt.minion_config = "salt/minion.conf"
+  config.vm.synced_folder "./invoice", "/home/vagrant/invoice"
+  config.vm.synced_folder "./staticfiles", "/home/vagrant/staticfiles"
 
-    #  # Show the output of salt
-    #  salt.verbose = true
-    #  
-    #  # Pre-distribute these keys on our local installation
-    #  salt.minion_key = "salt/keys/vagrant.invoice-backend.pem"
-    #  salt.minion_pub = "salt/keys/vagrant.invoice-backend.pub"
 
-    #  # Run the highstate on start
-    #  salt.run_highstate = true
-
-    #  # Install the latest version of SaltStack
-    #  salt.install_type = "daily"
-    #end
-
-    # Customize the box
-    web.vm.provider :virtualbox do |v|
-      v.customize ["modifyvm", :id, "--memory", 512]
-    end
+  config.vm.provider "virtualbox" do |vb|
+    vb.gui = false
+    vb.customize ["modifyvm", :id, "--memory", "1012"]
   end
+
 end
