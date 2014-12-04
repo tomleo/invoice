@@ -1,6 +1,6 @@
 Django==1.6.2
 South==0.8.4
 argparse==1.2.1
-gunicorn==18.0
 psycopg2==2.5.2
+uWSGI==2.0.3
 wsgiref==0.1.2
